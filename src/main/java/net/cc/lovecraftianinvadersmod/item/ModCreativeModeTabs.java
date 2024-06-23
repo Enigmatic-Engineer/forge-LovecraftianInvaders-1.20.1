@@ -1,6 +1,7 @@
 package net.cc.lovecraftianinvadersmod.item;
 
 import net.cc.lovecraftianinvadersmod.LovecraftianInvadersMod;
+import net.cc.lovecraftianinvadersmod.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,6 +21,8 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.HORRIFIC_EYE.get());
                         output.accept(ModItems.FLESHY_MASS.get());
+
+                        output.accept(ModBlocks.FLESHY_BLOCK.get());
                     })
                     .build());
 
