@@ -1,6 +1,7 @@
 package net.cc.lovecraftianinvadersmod.item.custom;
 
 import net.cc.lovecraftianinvadersmod.block.ModBlocks;
+import net.cc.lovecraftianinvadersmod.util.ModTags;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -54,6 +55,6 @@ public class PortalDetectorItem extends Item {
     }
 
     private boolean isPortalBlock(BlockState state) {
-        return state.is(Blocks.IRON_BLOCK);
+        return state.is(ModTags.Blocks.PORTAL_DETECTOR_PORTALS);
     }
 }
