@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.PORTAL_DETECTOR.get());
 
                         output.accept(ModBlocks.FLESHY_BLOCK.get());
+                        output.accept(ModBlocks.EYE_BLOCK.get());
                     })
                     .build());
 

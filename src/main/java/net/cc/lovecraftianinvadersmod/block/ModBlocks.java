@@ -1,6 +1,7 @@
 package net.cc.lovecraftianinvadersmod.block;
 
 import net.cc.lovecraftianinvadersmod.LovecraftianInvadersMod;
+import net.cc.lovecraftianinvadersmod.block.custom.SoundBlock;
 import net.cc.lovecraftianinvadersmod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,8 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> FLESHY_BLOCK = registerBlock("fleshy_block",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.MUSHROOM_STEM).sound(SoundType.SLIME_BLOCK).requiresCorrectToolForDrops().strength(2f)));
+    public static final RegistryObject<Block> EYE_BLOCK = registerBlock("eye_block",
+            () -> new SoundBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).sound(SoundType.SLIME_BLOCK).requiresCorrectToolForDrops().strength(2f)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
