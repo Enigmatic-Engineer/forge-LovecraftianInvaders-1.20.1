@@ -31,11 +31,11 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FLESHY_BLOCK.get())
                 .pattern("FF")
                 .pattern("FF")
-                .define('S', ModItems.FLESHY_MASS.get())
+                .define('F', ModItems.FLESHY_MASS.get())
                 .unlockedBy(getHasName(ModItems.FLESHY_MASS.get()), has(ModItems.FLESHY_MASS.get()))
                 .save(consumer);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FLESHY_MASS.get(), 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.FLESHY_MASS.get(), 4)
                 .requires(ModBlocks.FLESHY_BLOCK.get())
                 .unlockedBy(getHasName(ModBlocks.FLESHY_BLOCK.get()), has(ModBlocks.FLESHY_BLOCK.get()))
                 .save(consumer);

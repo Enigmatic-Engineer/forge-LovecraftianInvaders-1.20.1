@@ -25,6 +25,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.EYE_BLOCK.get()
                 );
 
+        this.tag(ModTags.Blocks.PORTAL_DETECTOR_PORTALS)
+                .add(ModBlocks.FLESHY_BLOCK.get(),
+                        ModBlocks.EYE_BLOCK.get()
+                );
+
         /*this.tag(Tags.Blocks.NEEDS_NETHERITE_TOOL)
                 .add(ModBlocks.FLESHY_BLOCK.get());*/
 
