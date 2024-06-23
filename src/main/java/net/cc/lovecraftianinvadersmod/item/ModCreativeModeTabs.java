@@ -22,6 +22,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.HORRIFIC_EYE.get());
                         output.accept(ModItems.FLESHY_MASS.get());
 
+                        output.accept(ModItems.PORTAL_DETECTOR.get());
+
                         output.accept(ModBlocks.FLESHY_BLOCK.get());
                     })
                     .build());

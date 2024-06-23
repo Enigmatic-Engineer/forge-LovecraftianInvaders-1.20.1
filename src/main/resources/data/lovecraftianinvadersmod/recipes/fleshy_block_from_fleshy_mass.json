@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "lovecraftianinvadersmod:fleshy_mass"
+    }
+  },
+  "result": {
+    "item": "lovecraftianinvadersmod:fleshy_block"
+  }
+}
