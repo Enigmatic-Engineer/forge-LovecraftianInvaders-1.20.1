@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "lovecraftianinvadersmod:block/eye_block"
+  }
+}

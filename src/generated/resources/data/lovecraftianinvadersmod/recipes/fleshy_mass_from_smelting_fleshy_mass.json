@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.25,
+  "group": "flesh",
+  "ingredient": {
+    "item": "lovecraftianinvadersmod:fleshy_mass"
+  },
+  "result": "lovecraftianinvadersmod:fleshy_mass"
+}
