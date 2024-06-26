@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.25,
+  "group": "flesh",
+  "ingredient": {
+    "item": "galacticinvadersmod:fleshy_mass"
+  },
+  "result": "galacticinvadersmod:fleshy_mass"
+}

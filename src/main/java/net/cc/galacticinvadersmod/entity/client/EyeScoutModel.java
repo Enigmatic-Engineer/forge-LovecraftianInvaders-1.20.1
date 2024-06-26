@@ -108,6 +108,7 @@ public class EyeScoutModel<T extends EyeScoutEntity> extends HierarchicalModel<T
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.animateWalk(ModAnimationDefinitions.EYE_SCOUT_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(entity.idleAnimationState, ModAnimationDefinitions.EYE_SCOUT_IDLE, ageInTicks, 1f);
+		this.animate(entity.attackAnimationState, ModAnimationDefinitions.EYE_SCOUT_ATTACK, ageInTicks, 1f);
 	}
 
 	@Override

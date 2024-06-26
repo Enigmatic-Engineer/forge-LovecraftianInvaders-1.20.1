@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "galacticinvadersmod:fleshy_mass"
+    }
+  },
+  "pattern": [
+    "FF",
+    "FF"
+  ],
+  "result": {
+    "item": "galacticinvadersmod:fleshy_block"
+  },
+  "show_notification": true
+}

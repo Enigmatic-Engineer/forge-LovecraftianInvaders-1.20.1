@@ -1,28 +1,37 @@
 package net.cc.galacticinvadersmod.entity.custom;
 
+import net.cc.galacticinvadersmod.entity.ai.EyeScoutAttackGoal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.EnumSet;
 
 public class EyeScoutEntity extends Monster {
+    private static final EntityDataAccessor<Boolean> ATTACKING =
+            SynchedEntityData.defineId(EyeScoutEntity.class, EntityDataSerializers.BOOLEAN);
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeout = 0;
+
+    public final AnimationState attackAnimationState = new AnimationState();
+    public int attackAnimationTimeout = 0;
 
     public EyeScoutEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -32,7 +41,10 @@ public class EyeScoutEntity extends Monster {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.targetSelector.addGoal(1, new EyeScoutAttackGoal(this, 1.0D, true));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(4, new EyeScoutChargeAttackGoal());
         this.goalSelector.addGoal(5, new WaterAvoidingRandomFlyingGoal(this, 1.0D));
         this.goalSelector.addGoal(8, new EyeScoutRandomMoveGoal());
         this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 8f));
@@ -45,7 +57,8 @@ public class EyeScoutEntity extends Monster {
                 .add(Attributes.MAX_HEALTH, 15D)
                 .add(Attributes.MOVEMENT_SPEED, 0.1D)
                 .add(Attributes.FLYING_SPEED, 0.4D)
-                .add(Attributes.ATTACK_DAMAGE, 4);
+                .add(Attributes.ATTACK_DAMAGE, 4)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.3f);
     }
 
     private void setupAnimationStates() {
@@ -55,6 +68,18 @@ public class EyeScoutEntity extends Monster {
         } else {
             --this.idleAnimationTimeout;
         }
+
+        if(this.isAttacking() && attackAnimationTimeout <= 0) {
+            attackAnimationTimeout = 15;
+            attackAnimationState.start(this.tickCount);
+        } else {
+            --this.attackAnimationTimeout;
+        }
+
+        if(!this.isAttacking()) {
+            attackAnimationState.stop();
+        }
+
     }
 
     protected void updateWalkAnimation(float v) {
@@ -75,6 +100,54 @@ public class EyeScoutEntity extends Monster {
         this.resetFallDistance();
         if (this.level().isClientSide()) {
             this.setupAnimationStates();
+        }
+    }
+
+    private class EyeScoutChargeAttackGoal extends Goal {
+        public EyeScoutChargeAttackGoal() {
+            this.setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        public boolean canUse() {
+            LivingEntity $$0 = EyeScoutEntity.this.getTarget();
+            if ($$0 != null && $$0.isAlive() && !EyeScoutEntity.this.getMoveControl().hasWanted() && EyeScoutEntity.this.random.nextInt(reducedTickDelay(7)) == 0) {
+                return EyeScoutEntity.this.distanceToSqr($$0) > 4.0;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean canContinueToUse() {
+            return EyeScoutEntity.this.getMoveControl().hasWanted() && EyeScoutEntity.this.getTarget() != null && EyeScoutEntity.this.getTarget().isAlive();
+        }
+
+        public void start() {
+            LivingEntity $$0 = EyeScoutEntity.this.getTarget();
+            if ($$0 != null) {
+                Vec3 $$1 = $$0.getEyePosition();
+                EyeScoutEntity.this.moveControl.setWantedPosition($$1.x, $$1.y, $$1.z, 1.0);
+            }
+
+        }
+
+        public boolean requiresUpdateEveryTick() {
+            return true;
+        }
+
+        public void tick() {
+            LivingEntity $$0 = EyeScoutEntity.this.getTarget();
+            if ($$0 != null) {
+                if (EyeScoutEntity.this.getBoundingBox().intersects($$0.getBoundingBox())) {
+                    EyeScoutEntity.this.doHurtTarget($$0);
+                } else {
+                    double $$1 = EyeScoutEntity.this.distanceToSqr($$0);
+                    if ($$1 < 9.0) {
+                        Vec3 $$2 = $$0.getEyePosition();
+                        EyeScoutEntity.this.moveControl.setWantedPosition($$2.x, $$2.y, $$2.z, 1.0);
+                    }
+                }
+
+            }
         }
     }
 
@@ -136,5 +209,19 @@ public class EyeScoutEntity extends Monster {
             }
 
         }
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(ATTACKING, attacking);
+    }
+
+    public boolean isAttacking() {
+        return this.entityData.get(ATTACKING);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ATTACKING, false);
     }
 }

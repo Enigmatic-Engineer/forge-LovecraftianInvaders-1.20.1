@@ -1,0 +1,4 @@
+// 1.20.1	2024-06-24T21:35:45.1095217	Tags for minecraft:block mod id galacticinvadersmod
+bc55f8f4975f1cf64961d37fe6f514f60a38d31b data/galacticinvadersmod/tags/blocks/portal_detector_portals.json
+95271235cd824f711bccdcc0c3395f5ccc7ab547 data/minecraft/tags/blocks/mineable/axe.json
+bc55f8f4975f1cf64961d37fe6f514f60a38d31b data/minecraft/tags/blocks/needs_iron_tool.json
