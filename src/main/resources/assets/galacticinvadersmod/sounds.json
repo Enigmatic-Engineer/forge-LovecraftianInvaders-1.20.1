@@ -1,0 +1,18 @@
+{
+  "scout_scanning_ambient": {
+    "subtitle": "sounds.galacticinvadersmod.scout_scanning_ambient",
+    "sounds": [
+      "galacticinvadersmod:scout_scanning_ambient",
+      "galacticinvadersmod:scout_scanning_ambient_2",
+      "galacticinvadersmod:scout_scanning_ambient_3"
+    ]
+  },
+  "scout_engaging_target": {
+    "subtitle": "sounds.galacticinvadersmod.scout_engaging_target",
+    "sounds": [
+      "galacticinvadersmod:scout_engaging_target",
+      "galacticinvadersmod:scout_engaging_target_2",
+      "galacticinvadersmod:scout_engaging_target_3"
+    ]
+  }
+}

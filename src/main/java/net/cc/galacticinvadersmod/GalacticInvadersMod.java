@@ -7,6 +7,7 @@ import net.cc.galacticinvadersmod.entity.client.EyeScoutRenderer;
 import net.cc.galacticinvadersmod.entity.client.SmallRiftRenderer;
 import net.cc.galacticinvadersmod.item.ModCreativeModeTabs;
 import net.cc.galacticinvadersmod.item.ModItems;
+import net.cc.galacticinvadersmod.sound.ModSounds;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,6 +38,8 @@ public class GalacticInvadersMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModSounds.register(modEventBus);
 
         ModEntities.register(modEventBus);
 

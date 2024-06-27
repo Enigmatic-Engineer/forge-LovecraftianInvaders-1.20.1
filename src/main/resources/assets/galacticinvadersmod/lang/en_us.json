@@ -7,6 +7,9 @@
   "item.galacticinvadersmod.small_rift_spawn_egg": "Small Rift Spawn Egg",
   "item.galacticinvadersmod.eye_scout_spawn_egg": "Eye Scout Spawn Egg",
 
+  "sounds.galacticinvadersmod.scout_scanning_ambient": "Scout is scanning",
+  "sounds.galacticinvadersmod.scout_engaging_target": "Scout is engaging",
+
   "block.galacticinvadersmod.fleshy_block": "Block of Flesh",
   "block.galacticinvadersmod.eye_block": "Block of Eyes",
 

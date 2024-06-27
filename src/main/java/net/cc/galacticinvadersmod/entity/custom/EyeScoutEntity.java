@@ -1,10 +1,12 @@
 package net.cc.galacticinvadersmod.entity.custom;
 
 import net.cc.galacticinvadersmod.entity.ai.EyeScoutAttackGoal;
+import net.cc.galacticinvadersmod.sound.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
@@ -20,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.checkerframework.checker.units.qual.A;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
@@ -37,6 +40,8 @@ public class EyeScoutEntity extends Monster {
         super(pEntityType, pLevel);
         this.moveControl = new EyeScoutMoveControl(this);
     }
+
+    private int timeUntilAttackVoiceline = 0;
 
     @Override
     protected void registerGoals() {
@@ -146,7 +151,12 @@ public class EyeScoutEntity extends Monster {
                         EyeScoutEntity.this.moveControl.setWantedPosition($$2.x, $$2.y, $$2.z, 1.0);
                     }
                 }
-
+                if (timeUntilAttackVoiceline >= 200) {
+                    playSound(ModSounds.SCOUT_ENGAGING_TARGET.get());
+                    timeUntilAttackVoiceline = 0;
+                } else {
+                    timeUntilAttackVoiceline = timeUntilAttackVoiceline + 1;
+                }
             }
         }
     }
@@ -223,5 +233,15 @@ public class EyeScoutEntity extends Monster {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(ATTACKING, false);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.SCOUT_SCANNING_AMBIENT.get();
+    }
+
+    public int getAmbientSoundInterval() {
+        return 160;
     }
 }
